@@ -1,0 +1,32 @@
+# Tested with Python 3.10 and CUDA 12.x.
+# Install the CUDA-matched PyTorch wheels before this file; see README.md.
+
+# Core training and evaluation
+torch==2.6.0
+torchvision==0.21.0
+torchaudio==2.6.0
+transformers==4.51.3
+accelerate==1.13.0
+omegaconf==2.3.0
+peft==0.17.1
+qwen-vl-utils==0.0.14
+numpy==2.2.6
+pillow==11.3.0
+matplotlib==3.10.7
+pycocotools==2.0.10
+sam2==1.1.0
+tqdm==4.67.3
+
+# Query-Reflect GRPO runtime
+datasets==3.6.0
+pyarrow==21.0.0
+ray==2.52.1
+tensordict==0.10.0
+vllm==0.8.5.post1
+xformers==0.0.29.post2
+
+# FlashAttention build/runtime
+packaging==25.0
+psutil==7.2.2
+ninja==1.13.0
+flash-attn==2.7.4.post1

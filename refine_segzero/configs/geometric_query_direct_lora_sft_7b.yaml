@@ -1,0 +1,83 @@
+base_model_path: "/path/to/aligned_export/mllm"
+processor_path: "/path/to/aligned_export/mllm"
+init_geometric_export_dir: "/path/to/aligned_export"
+sam_checkpoint_path: "/path/to/sam2_hiera_large.pt"
+sam_model_cfg: "sam2_hiera_l.yaml"
+image_root: "/path/to/coco/train2014"
+
+train_branch: "direct"
+data_mode: "stage1_cache"
+stage1_train_cache_paths: "training_scripts/refine_segzero/Rl_data/data/query_reflect_grpo_stage1/stage1_cache_train.json"
+stage1_eval_cache_path: "training_scripts/refine_segzero/Rl_data/data/query_reflect_grpo_stage1/stage1_cache_val.json"
+train_json_paths:
+  - "/path/to/refcocog_train.json"
+  - "/path/to/refcoco_train.json"
+  - "/path/to/refcoco+_train.json"
+direct_reflect_json_path: "training_scripts/refine_segzero/Rl_data/data/query_reflect_grpo_reflect/reflect_train.json"
+direct_eval_json_path: "training_scripts/refine_segzero/Rl_data/data/query_reflect_grpo_reflect/reflect_val.json"
+eval_json_path: "/path/to/refcocog_val.json"
+direct_prompt_mode: "query_reflect_reason_only"
+direct_enable_lora: true
+direct_lora_adapter_name: "direct"
+direct_lora_r: 16
+direct_lora_alpha: 64
+direct_lora_dropout: 0.05
+direct_lora_target_modules:
+  - "q_proj"
+  - "k_proj"
+  - "v_proj"
+  - "o_proj"
+aligned_prompt_sampling_enabled: true
+aligned_prompt_variants:
+  - "box"
+  - "points"
+  - "box_points"
+  - "embedding"
+aligned_prompt_variant_probs:
+  - 0.25
+  - 0.25
+  - 0.25
+  - 0.25
+aligned_box_jitter_ratio: 0.0
+aligned_point_jitter_ratio: 0.0
+aligned_soft_bbox_loss_weight: 0.0
+aligned_box_gap_loss_weight: 0.0
+aligned_prompt_embedding_loss_weight: 0.0
+
+output_dir: "outputs/geometric_query_branch_sft_direct_lora"
+train_max_sample_ratio_per_file: 1.0
+eval_max_sample_ratio: 1.0
+sample_seed: 42
+
+resize_size: 840
+sam_image_size: 1024
+max_pixels: 2007040
+min_pixels: 3136
+hidden_state_layer: -1
+aligned_output_tokens: 12
+direct_output_tokens: 12
+num_learnable_queries: 64
+prompt_space: "two_stage_sparse"
+connector_qformer_dim: 1024
+
+freeze_mllm: true
+freeze_sam: true
+attn_implementation: "flash_attention_2"
+bf16: true
+fp16: false
+
+learning_rate: 6.0e-5
+connector_learning_rate: 6.0e-5
+weight_decay: 0.01
+batch_size: 4
+shuffle: true
+gradient_accumulation_steps: 2
+num_epochs: 2
+warmup_steps: 100
+scheduler_type: "cosine"
+max_grad_norm: 1.0
+num_workers: 2
+eval_every_steps: 500
+save_best_every_steps: 500
+seed: 42
+export_copy_sam_checkpoint: false

@@ -1,0 +1,50 @@
+base_model_path: "/path/to/base_model"
+processor_path: ""
+sam_checkpoint_path: "/path/to/sam2_hiera_large.pt"
+sam_model_cfg: "sam2_hiera_l.yaml"
+image_root: "/path/to/coco/train2014"
+data_mode: "stage1_cache"
+stage1_train_cache_paths: "training_scripts/refine_segzero/Rl_data/data/query_reflect_grpo_stage1/stage1_cache_train.json"
+stage1_eval_cache_path: "training_scripts/refine_segzero/Rl_data/data/query_reflect_grpo_stage1/stage1_cache_val.json"
+connector_qformer_dim: 1024
+train_json_paths:
+  - "/path/to/refcocog_train.json"
+  - "/path/to/refcoco_train.json"
+  - "/path/to/refcoco+_train.json"
+eval_json_path: "/path/to/refcocog_val.json"
+output_dir: "outputs/geometric_query_7b"
+train_max_sample_ratio_per_file: 1.0
+eval_max_sample_ratio: 0.5
+sample_seed: 42
+
+resize_size: 840
+sam_image_size: 1024
+max_pixels: 2007040
+min_pixels: 3136
+hidden_state_layer: -1
+aligned_output_tokens: 12
+direct_output_tokens: 12
+num_learnable_queries: 64
+prompt_space: "two_stage_sparse"
+
+freeze_mllm: true
+freeze_sam: true
+attn_implementation: "flash_attention_2"
+bf16: true
+fp16: false
+
+learning_rate: 3.0e-5
+connector_learning_rate: 3.0e-5
+weight_decay: 0.01
+batch_size: 4
+gradient_accumulation_steps: 2
+num_epochs: 3
+warmup_steps: 100
+scheduler_type: "cosine"
+max_grad_norm: 1.0
+num_workers: 2
+eval_every_steps: 1000
+save_best_every_steps: 5000
+seed: 42
+export_copy_sam_checkpoint: false
+ 

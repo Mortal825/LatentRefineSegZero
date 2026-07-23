@@ -1,0 +1,75 @@
+data:
+  train_files: training_scripts/refine_segzero/Rl_data/data/query_reflect_grpo/train.json
+  val_files: training_scripts/refine_segzero/Rl_data/data/query_reflect_grpo/val.json
+  prompt_key: problem
+  max_prompt_length: 1500
+  max_response_length: 256
+  rollout_batch_size: 16
+  shuffle: true
+  seed: 42
+  max_pixels: 705600
+  min_pixels: 3136
+  enforce_query_reflect_batch_ratio: true
+  query_reflect_batch_ratio:
+    init_box: 1
+    reflect_accept: 3
+    reflect_reject: 4
+
+algorithm:
+  adv_estimator: grpo
+  kl_coef: 0.0
+
+worker:
+  actor:
+    global_batch_size: 16
+    micro_batch_size_per_device_for_update: 2
+    micro_batch_size_per_device_for_experience: 2
+    max_grad_norm: 1.0
+    use_kl_loss: true
+    kl_loss_coef: 5.0e-3
+    kl_loss_type: low_var_kl
+    model:
+      model_path: /path/to/geometric_export/mllm
+      tokenizer_path: /path/to/geometric_export/mllm
+      enable_gradient_checkpointing: true
+      trust_remote_code: true
+    optim:
+      lr: 1.0e-6
+      lr_warmup_steps: 50  # 50
+      weight_decay: 1.0e-2
+    fsdp:
+      param_offload: false
+      optimizer_offload: false
+      torch_dtype: null
+    offload:
+      param_offload: true
+      optimizer_offload: false
+
+  rollout:
+    temperature: 1.0
+    tensor_parallel_size: 2
+    gpu_memory_utilization: 0.4
+    # max_num_batched_tokens: 4096
+    n: 8
+    enable_chunked_prefill: false
+    limit_images: 2
+
+  ref:
+    offload:
+      param_offload: true
+
+  reward:
+    reward_type: function
+    compute_score: query_reflect_grpo
+
+trainer:
+  total_episodes: 1
+  project_name: query_reflect_grpo
+  logger: ["console"]
+  n_gpus_per_node: 8
+  nnodes: 1
+  save_freq: 300
+  test_freq: 300
+  val_before_train: false # true
+  val_only: false
+  save_checkpoint_path: outputs/query_reflect_grpo
