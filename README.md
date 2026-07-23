@@ -53,7 +53,7 @@ backbones remain frozen.
   <img
     src="img/model.png"
     alt="Overview of LatentRefine-SegZero"
-    width="96%"
+    width="200%"
   />
 </p>
 
@@ -264,25 +264,6 @@ The evaluation script reports:
 Adjust `CUDA_VISIBLE_DEVICES` and `NPROC_PER_NODE` according to your hardware.
 Set `DRY_RUN=1` to inspect the assembled command without loading the models.
 
-## Results
-
-LatentRefine-SegZero is evaluated on RefCOCO, RefCOCO+, RefCOCOg, and RefAdv.
-
-### In-Domain Referring Segmentation
-
-The following results report cIoU (%).
-
-| Dataset  | val   | testA | testB | test  |
-|----------|------:|------:|------:|------:|
-| RefCOCO  | 79.05 | 82.35 | 75.89 | --    |
-| RefCOCO+ | 74.38 | 79.63 | 68.58 | --    |
-| RefCOCOg | 75.66 | --    | --    | 76.20 |
-
-### Out-of-Domain Generalization
-
-| Dataset | BBox IoU | Box Acc@0.5 |
-|---------|---------:|------------:|
-| RefAdv  | 0.469    | 0.502       |
 
 <!-- TODO: Add the full state-of-the-art comparison table. -->
 
