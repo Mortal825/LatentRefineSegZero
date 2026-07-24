@@ -244,7 +244,7 @@ Run a one-sample RefCOCOg smoke test before full evaluation:
 ```bash
 CUDA_VISIBLE_DEVICES=0 \
 NPROC_PER_NODE=1 \
-LIMIT=1 \
+LIMIT=-1 \
 GEOMETRIC_EXPORT_DIR=/absolute/path/to/final_export \
 REF_JSON_PATH=/absolute/path/to/refcocog_test.json \
 IMAGE_ROOT=/absolute/path/to/coco/images \
